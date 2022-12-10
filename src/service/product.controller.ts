@@ -1,41 +1,47 @@
 /**
  * Data Model Interfaces
  */
-import { Product, BaseProduct } from "./products.interface";
-import { ProductsMap } from "./products.map.interface";
+
+import { BaseProduct, Product, ProductsList } from "../interface/product.interface";
+
 
 /**
  * In-Memory Store
  */
 
-let mockProducts: ProductsMap = {
+let mockProducts: ProductsList = {
     1: {
         id: 1,
         name: "Burger",
         price: 599,
         description: "Tasty",
-        image: "https://cdn.auth0.com/blog/whatabyte/burger-sm.png"
+        image: "https://cdn.auth0.com/blog/whatabyte/burger-sm.png",
+        quantity: 10,
+        active: true
     },
     2: {
         id: 2,
         name: "Pizza",
         price: 299,
         description: "Cheesy",
-        image: "https://cdn.auth0.com/blog/whatabyte/pizza-sm.png"
+        image: "https://cdn.auth0.com/blog/whatabyte/pizza-sm.png",
+        quantity: 10,
+        active: true
     },
     3: {
         id: 3,
         name: "Tea",
         price: 199,
         description: "Informative",
-        image: "https://cdn.auth0.com/blog/whatabyte/tea-sm.png"
+        image: "https://cdn.auth0.com/blog/whatabyte/tea-sm.png",
+        quantity: 10,
+        active: true
     }
 };
 
 /**
  * Service Methods
  */
-
 export const findAll = async (): Promise<Product[]> => Object.values(mockProducts);
 
 export const find = async (id: number): Promise<Product> => mockProducts[id];

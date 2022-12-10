@@ -3,8 +3,14 @@ export interface BaseProduct {
     price: number;
     description: string;
     image: string;
+    quantity:  number;
+    active: boolean;
   }
   
   export interface Product extends BaseProduct {
     id: number;
+  }
+
+  export interface ProductsList {
+    [key: number]: Product;
   }

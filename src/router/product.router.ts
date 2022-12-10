@@ -3,8 +3,8 @@
  */
 
 import express, { Request, Response } from "express";
-import { BaseProduct, Product } from "../../products/products.interface";
-import * as ProductService from "../../products/products.service";
+import { BaseProduct, Product } from "../interface/product.interface";
+import * as ProductService from "../service/product.controller"
 /**
 * Router Definition
 */
@@ -86,8 +86,8 @@ productsRouter.put("/:id", async (req: Request, res: Response) => {
 
 productsRouter.delete("/:id", async (req: Request, res: Response) => {
     try {
-        const id: number = parseInt(req.params.id, 10);
-        await ProductService.remove(id);
+        const productId: number = parseInt(req.params.id, 10);
+        await ProductService.remove(productId);
 
         res.sendStatus(204);
     } catch (e) {
