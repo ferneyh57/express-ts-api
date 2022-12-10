@@ -35,6 +35,7 @@ app.use("/api/products", productsRouter);
 
 app.use(errorHandler);
 app.use(notFoundHandler);
+
 /**
  * Server Activation
  */
