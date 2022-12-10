@@ -12,7 +12,7 @@ import { BaseProduct, Product, ProductsList } from "../interface/product.interfa
 let mockProducts: ProductsList = {
     1: {
         id: 1,
-        name: "Burger",
+        name: "Ryzen 5600",
         price: 599,
         description: "Tasty",
         image: "https://cdn.auth0.com/blog/whatabyte/burger-sm.png",
@@ -21,7 +21,7 @@ let mockProducts: ProductsList = {
     },
     2: {
         id: 2,
-        name: "Pizza",
+        name: "Intel 13900K",
         price: 299,
         description: "Cheesy",
         image: "https://cdn.auth0.com/blog/whatabyte/pizza-sm.png",
@@ -30,7 +30,7 @@ let mockProducts: ProductsList = {
     },
     3: {
         id: 3,
-        name: "Tea",
+        name: "Rx 6600XT",
         price: 199,
         description: "Informative",
         image: "https://cdn.auth0.com/blog/whatabyte/tea-sm.png",
