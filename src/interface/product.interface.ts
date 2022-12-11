@@ -5,6 +5,7 @@ export interface BaseProduct {
     image: string;
     quantity:  number;
     active: boolean;
+    componentId:number,
   }
   
   export interface Product extends BaseProduct {

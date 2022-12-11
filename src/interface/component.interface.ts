@@ -1,14 +1,16 @@
-export interface Component{
-    id: number,
-    name : ComponentType,
+export interface BaseComponent {
+    name: ComponentType,
     description?: string
 }
-
-export enum ComponentType{
+export interface Component extends BaseComponent {
+    id: number,
+}
+export enum ComponentType {
     CPU,
     GPU,
     PSU,
     HDD,
     SSD,
     RAM,
+    BOARD,
 }

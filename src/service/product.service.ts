@@ -3,6 +3,8 @@
  */
 
 import { BaseProduct, Product } from "../interface/product.interface";
+import { CrudActions } from "../utils/crud.interface";
+;
 
 
 /**
@@ -17,7 +19,8 @@ let mockProducts: Product[] = [
         description: "Tasty",
         image: "https://cdn.auth0.com/blog/whatabyte/burger-sm.png",
         quantity: 10,
-        active: true
+        active: true,
+        componentId: 1,
     },
     {
         id: 2,
@@ -26,7 +29,8 @@ let mockProducts: Product[] = [
         description: "Cheesy",
         image: "https://cdn.auth0.com/blog/whatabyte/pizza-sm.png",
         quantity: 10,
-        active: true
+        active: true,
+        componentId: 1,
     },
     {
         id: 3,
@@ -35,27 +39,24 @@ let mockProducts: Product[] = [
         description: "Informative",
         image: "https://cdn.auth0.com/blog/whatabyte/tea-sm.png",
         quantity: 10,
-        active: true
+        active: true,
+        componentId: 2,
     }
 ];
-export interface ProductRepository {
-    createProduct(baseProductData: BaseProduct): Promise<Product | null>;
-    getProductById(id: number): Promise<Product | null>;
-    getAllproducts(): Promise<Product[]>;
-    deleteProduct(id: number): Promise<null | void>;
-    updateProduct(id: number, productData: BaseProduct): Promise<Product | null>;
+export interface ProductRepository extends CrudActions<Product,BaseProduct>{
+
 }
 
 
 export const productMockRepository: ProductRepository = {
-    createProduct: async function (baseProductData: BaseProduct): Promise<Product | null> {
+    create: async function (baseProductData: BaseProduct): Promise<Product | null> {
         const id = new Date().valueOf();
         const newProduct: Product = { id, ...baseProductData }
         mockProducts = [...mockProducts, newProduct]
         return newProduct
     },
 
-    getProductById: async function (id: number): Promise<Product | null> {
+    getById: async function (id: number): Promise<Product | null> {
         const findProduct = mockProducts.find(e => e.id == id)
         if (!findProduct) {
             return null
@@ -63,11 +64,11 @@ export const productMockRepository: ProductRepository = {
         return findProduct;
     },
 
-    getAllproducts: async function (): Promise<Product[]> {
+    getAll: async function (): Promise<Product[]> {
         return mockProducts;
     },
 
-    deleteProduct: async function (id: number): Promise<void | null> {
+    delete: async function (id: number): Promise<void | null> {
         const findProduct = mockProducts.find(e => e.id == id)
 
         if (!findProduct) {
@@ -76,7 +77,7 @@ export const productMockRepository: ProductRepository = {
 
         mockProducts = mockProducts.filter(e => e.id != id)
     },
-    updateProduct: async function (id: number, productData: BaseProduct): Promise<Product | null> {
+    update: async function (id: number, productData: BaseProduct): Promise<Product | null> {
         const findProduct = mockProducts.find(e => e.id == id)
 
         if (!findProduct) {
