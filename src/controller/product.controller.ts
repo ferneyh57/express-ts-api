@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import { Request, Response } from "express";
 import { BaseProduct, Product } from "../interface/product.interface";
 import * as ProductService from "../service/product.service"
 
