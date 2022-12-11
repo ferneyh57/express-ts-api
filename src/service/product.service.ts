@@ -2,15 +2,15 @@
  * Data Model Interfaces
  */
 
-import { BaseProduct, Product, ProductsList } from "../interface/product.interface";
+import { BaseProduct, Product } from "../interface/product.interface";
 
 
 /**
  * In-Memory Store
  */
 
-let mockProducts: ProductsList = {
-    1: {
+let mockProducts: Product[] = [
+    {
         id: 1,
         name: "Ryzen 5600",
         price: 599,
@@ -19,7 +19,7 @@ let mockProducts: ProductsList = {
         quantity: 10,
         active: true
     },
-    2: {
+    {
         id: 2,
         name: "Intel 13900K",
         price: 299,
@@ -28,7 +28,7 @@ let mockProducts: ProductsList = {
         quantity: 10,
         active: true
     },
-    3: {
+    {
         id: 3,
         name: "Rx 6600XT",
         price: 199,
@@ -37,24 +37,27 @@ let mockProducts: ProductsList = {
         quantity: 10,
         active: true
     }
-};
+];
 
 /**
  * Service Methods
  */
-export const findAll = async (): Promise<Product[]> => Object.values(mockProducts);
+export const findAll = async (): Promise<Product[]> => mockProducts;
 
-export const find = async (id: number): Promise<Product> => mockProducts[id];
+export const find = async (id: number): Promise<Product | null> => {
+    const findProduct = mockProducts.find(e => e.id == id)
+    if (!findProduct) {
+        return null
+    }
+    return findProduct;
+};
 
-export const create = async (newItem: BaseProduct): Promise<Product> => {
+export const create = async (baseProduct: BaseProduct): Promise<Product> => {
     const id = new Date().valueOf();
+    const newProduct = { id, ...baseProduct }
+    mockProducts = [...mockProducts, newProduct]
 
-    mockProducts[id] = {
-        id,
-        ...newItem,
-    };
-
-    return mockProducts[id];
+    return newProduct;
 };
 
 export const update = async (
@@ -66,10 +69,12 @@ export const update = async (
     if (!findProduct) {
         return null;
     }
+    const updatedProduct = { id, ...productUpdate }
 
-    mockProducts[id] = { id, ...productUpdate };
-
-    return mockProducts[id];
+    mockProducts.forEach((element, index) => {
+        mockProducts[index] = element.id == id ? updatedProduct : element
+    });
+    return updatedProduct;
 };
 
 export const remove = async (id: number): Promise<null | void> => {
@@ -79,5 +84,5 @@ export const remove = async (id: number): Promise<null | void> => {
         return null;
     }
 
-    delete mockProducts[id];
+    mockProducts = mockProducts.filter(e => e.id != id)
 };

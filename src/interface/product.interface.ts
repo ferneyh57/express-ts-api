@@ -10,7 +10,3 @@ export interface BaseProduct {
   export interface Product extends BaseProduct {
     id: number;
   }
-
-  export interface ProductsList {
-    [key: number]: Product;
-  }

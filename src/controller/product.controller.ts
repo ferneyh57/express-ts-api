@@ -16,9 +16,9 @@ export const getProductById = async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
 
     try {
-        const findProduct: Product = await ProductService.find(id);
+        const findProduct: Product  | null = await ProductService.find(id);
 
-        if (findProduct) {
+        if (findProduct!=null) {
             return res.status(200).send(findProduct);
         }
 
@@ -46,9 +46,9 @@ export const updateProduct =  async (req: Request, res: Response) => {
     try {
         const newProductData: Product = req.body;
 
-        const findProduct: Product = await ProductService.find(id);
+        const findProduct: Product  | null = await ProductService.find(id);
 
-        if (findProduct) {
+        if (findProduct != null) {
             const updatedProduct = await ProductService.update(id, newProductData);
             return res.status(200).json(updatedProduct);
         }
