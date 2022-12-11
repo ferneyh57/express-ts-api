@@ -77,13 +77,14 @@ export const productMockRepository: ProductRepository = {
 
         mockProducts = mockProducts.filter(e => e.id != id)
     },
-    update: async function (id: number, productData: BaseProduct): Promise<Product | null> {
+    update: async function (id: number, productData: Product): Promise<Product | null> {
         const findProduct = mockProducts.find(e => e.id == id)
 
         if (!findProduct) {
             return null;
         }
-        const updatedProduct = { id, ...productData }
+        let updatedProduct :Product = productData
+        updatedProduct.id = id
 
         mockProducts.forEach((element, index) => {
             mockProducts[index] = element.id == id ? updatedProduct : element

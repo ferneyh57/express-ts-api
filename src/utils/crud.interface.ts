@@ -4,5 +4,5 @@ export interface CrudActions<T,S>{
     getById(id: number): Promise<T | null>;
     getAll(): Promise<T[]>;
     delete(id: number): Promise<null | void>;
-    update(id: number, baseData: S): Promise<T | null>;
+    update(id: number, baseData: T): Promise<T | null>;
 }

@@ -9,6 +9,7 @@ import helmet from "helmet";
 import { productsRouter } from "./router/product.router"
 import { errorHandler } from "./middleware/error.middleware";
 import { notFoundHandler } from "./middleware/not-found.middleware";
+import { componentsRouter } from "./router/component.router";
 
 dotenv.config();
 
@@ -32,6 +33,7 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use("/api/products", productsRouter);
+app.use("/api/components", componentsRouter);
 
 app.use(errorHandler);
 app.use(notFoundHandler);

@@ -6,11 +6,12 @@ export interface Component extends BaseComponent {
     id: number,
 }
 export enum ComponentType {
-    CPU,
-    GPU,
-    PSU,
-    HDD,
-    SSD,
-    RAM,
-    BOARD,
+    CPU ="CPU",
+    GPU ="GPU",
+    PSU = "PSU",
+    HDD = "HDD",
+    SSD = "SSD",
+    RAM = "RAM",
+    BOARD = "BOARD",
 }
+
