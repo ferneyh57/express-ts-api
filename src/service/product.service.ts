@@ -38,51 +38,55 @@ let mockProducts: Product[] = [
         active: true
     }
 ];
+export interface ProductRepository {
+    createProduct(baseProductData: BaseProduct): Promise<Product | null>;
+    getProductById(id: number): Promise<Product | null>;
+    getAllproducts(): Promise<Product[]>;
+    deleteProduct(id: number): Promise<null | void>;
+    updateProduct(id: number, productData: BaseProduct): Promise<Product | null>;
+}
 
-/**
- * Service Methods
- */
-export const findAll = async (): Promise<Product[]> => mockProducts;
 
-export const find = async (id: number): Promise<Product | null> => {
-    const findProduct = mockProducts.find(e => e.id == id)
-    if (!findProduct) {
-        return null
+export const productMockRepository: ProductRepository = {
+    createProduct: async function (baseProductData: BaseProduct): Promise<Product | null> {
+        const id = new Date().valueOf();
+        const newProduct: Product = { id, ...baseProductData }
+        mockProducts = [...mockProducts, newProduct]
+        return newProduct
+    },
+
+    getProductById: async function (id: number): Promise<Product | null> {
+        const findProduct = mockProducts.find(e => e.id == id)
+        if (!findProduct) {
+            return null
+        }
+        return findProduct;
+    },
+
+    getAllproducts: async function (): Promise<Product[]> {
+        return mockProducts;
+    },
+
+    deleteProduct: async function (id: number): Promise<void | null> {
+        const findProduct = mockProducts.find(e => e.id == id)
+
+        if (!findProduct) {
+            return null;
+        }
+
+        mockProducts = mockProducts.filter(e => e.id != id)
+    },
+    updateProduct: async function (id: number, productData: BaseProduct): Promise<Product | null> {
+        const findProduct = mockProducts.find(e => e.id == id)
+
+        if (!findProduct) {
+            return null;
+        }
+        const updatedProduct = { id, ...productData }
+
+        mockProducts.forEach((element, index) => {
+            mockProducts[index] = element.id == id ? updatedProduct : element
+        });
+        return updatedProduct;
     }
-    return findProduct;
-};
-
-export const create = async (baseProduct: BaseProduct): Promise<Product> => {
-    const id = new Date().valueOf();
-    const newProduct = { id, ...baseProduct }
-    mockProducts = [...mockProducts, newProduct]
-
-    return newProduct;
-};
-
-export const update = async (
-    id: number,
-    productUpdate: BaseProduct
-): Promise<Product | null> => {
-    const findProduct = await find(id);
-
-    if (!findProduct) {
-        return null;
-    }
-    const updatedProduct = { id, ...productUpdate }
-
-    mockProducts.forEach((element, index) => {
-        mockProducts[index] = element.id == id ? updatedProduct : element
-    });
-    return updatedProduct;
-};
-
-export const remove = async (id: number): Promise<null | void> => {
-    const findProduct = await find(id);
-
-    if (!findProduct) {
-        return null;
-    }
-
-    mockProducts = mockProducts.filter(e => e.id != id)
-};
+}
